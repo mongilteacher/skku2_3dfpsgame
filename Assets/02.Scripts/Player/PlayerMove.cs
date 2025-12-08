@@ -1,11 +1,19 @@
 using UnityEngine;
 
 // 키보드를 누르면 캐릭터를 그 방향으로 이동 시키고 싶다.
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMove : MonoBehaviour
 {
     // 필요 속성
     // - 이동속도
     public float MoveSpeed = 7;
+
+    private CharacterController _controller;
+
+    private void Awake()
+    {
+        _controller = GetComponent<CharacterController>();
+    }
 
     private void Update()
     {
@@ -25,7 +33,7 @@ public class PlayerMove : MonoBehaviour
         
         
         // 3. 방향으로 이동시키기  
-        transform.position += direction * MoveSpeed * Time.deltaTime;
+        _controller.Move(direction * MoveSpeed * Time.deltaTime);
     }
     
 }
