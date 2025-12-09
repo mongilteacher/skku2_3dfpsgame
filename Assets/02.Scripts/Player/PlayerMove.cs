@@ -2,23 +2,22 @@ using UnityEngine;
 
 // 키보드를 누르면 캐릭터를 그 방향으로 이동 시키고 싶다.
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(PlayerStats))]
 public class PlayerMove : MonoBehaviour
 {
     // 필요 속성
-    // - 이동속도
-    public float MoveSpeed = 7;
     // - 중력
     public float Gravity = -9.81f;
-    // - 점프력
-    public float JumpPower = 5f;
-    
     
     private CharacterController _controller;
+    private PlayerStats _stats;
+    
     private float _yVelocity = 0f;   // 중력에 의해 누적될 y값 변수
     
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
+        _stats = GetComponent<PlayerStats>();
     }
 
     private void Update()
@@ -43,7 +42,7 @@ public class PlayerMove : MonoBehaviour
         // - 점프! : 점프 키를 누르고 && 땅이라면
         if (Input.GetButtonDown("Jump") && _controller.isGrounded)
         {
-            _yVelocity = JumpPower;
+            _yVelocity = _stats.JumpPower.Value;
         }
         
         // - 카메라가 쳐다보는 방향으로 변환한다. (월드 -> 로컬)
@@ -52,7 +51,7 @@ public class PlayerMove : MonoBehaviour
 
         
         // 3. 방향으로 이동시키기  
-        _controller.Move(direction * MoveSpeed * Time.deltaTime);
+        _controller.Move(direction * _stats.MoveSpeed.Value * Time.deltaTime);
     }
     
 }

@@ -793,6 +793,7 @@ GameObject:
   - component: {fileID: 950359099}
   - component: {fileID: 950359100}
   - component: {fileID: 950359101}
+  - component: {fileID: 950359102}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -896,6 +897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 7
   Gravity: -9.81
+  JumpPower: 5
 --- !u!143 &950359101
 CharacterController:
   m_ObjectHideFlags: 0
@@ -921,6 +923,34 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &950359102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950359094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e74186f338b6e4b9d45e4dea0b7c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health:
+    _maxValue: 100
+    _value: 100
+    _regenValue: 5
+  Stamina:
+    _maxValue: 100
+    _value: 100
+    _regenValue: 20
+  Damage:
+    _value: 10
+  MoveSpeed:
+    _value: 7
+  RunSpeed:
+    _value: 14
+  JumpPower:
+    _value: 5
 --- !u!1 &1305634186
 GameObject:
   m_ObjectHideFlags: 0
