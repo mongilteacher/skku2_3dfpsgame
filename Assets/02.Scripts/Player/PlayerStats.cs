@@ -9,5 +9,20 @@ public class PlayerStats : MonoBehaviour
     public ValueStat MoveSpeed;
     public ValueStat RunSpeed;
     public ValueStat JumpPower;
+
+
+    private void Start()
+    {
+        Health.Initialize();
+        Stamina.Initialize();
+    }
+
+    private void Update()
+    {
+        float deltaTime = Time.deltaTime;
+        
+        Health.Regenerate(deltaTime);
+        Stamina.Regenerate(deltaTime);
+    }
     
 }
