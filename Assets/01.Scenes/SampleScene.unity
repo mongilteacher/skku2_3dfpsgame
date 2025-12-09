@@ -1061,7 +1061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _config:
     Gravity: -9.18
-    RunStamina: 3
+    RunStamina: 20
     JumpStamina: 3
 --- !u!143 &950359101
 CharacterController:
@@ -1107,7 +1107,7 @@ MonoBehaviour:
   Stamina:
     _maxValue: 100
     _value: 100
-    _regenValue: 20
+    _regenValue: 1
   Damage:
     _value: 10
   MoveSpeed:
