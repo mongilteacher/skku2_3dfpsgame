@@ -15,15 +15,10 @@ public class CameraRotate : MonoBehaviour
     {
         
         // 게임 시작하면 y축이 0도에서 -> -1도
-        if (!Input.GetMouseButton(1))
-        {
-            return;
-        }
         
         // 1. 마우스 입력 받기
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
-        Debug.Log($"{mouseX}, {mouseY}");
         
         // 2. 마우스 입력을 누적한 방향을 구한다.
         _accumulationX +=  mouseX * RotationSpeed * Time.deltaTime; // 범위가 없다.
