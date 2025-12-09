@@ -6,6 +6,7 @@ public class Bomb : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
+        // 내 위치에 폭탄 생성
         GameObject effectObject = Instantiate(_explosionEffectPrefab);
         effectObject.transform.position = transform.position;
             
