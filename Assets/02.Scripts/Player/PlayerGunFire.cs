@@ -5,6 +5,7 @@ public class PlayerGunFire : MonoBehaviour
 {
     // 목표: 마우스의 왼쪽 버튼을 누르면 바라보는 방향으로 총을 발사하고 싶다. (총알을 날리고 싶다.)
     [SerializeField] private Transform _fireTransform;
+    [SerializeField] private ParticleSystem _hitEffectPrefab;
     
     private void Update()
     {
@@ -23,6 +24,9 @@ public class PlayerGunFire : MonoBehaviour
             {
                 // 5.  충돌했다면... 피격 이펙트 표시
                 Debug.Log(hitInfo.transform.name);
+                ParticleSystem hitEffect = Instantiate(_hitEffectPrefab, hitInfo.point, Quaternion.identity);
+                hitEffect.transform.forward = hitInfo.normal;
+                hitEffect.Play();
             }
         }
         
