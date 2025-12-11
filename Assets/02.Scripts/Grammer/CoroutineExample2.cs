@@ -22,6 +22,7 @@ public class CoroutineExample2 : MonoBehaviour
 
     private IEnumerator Reload_Coroutine()
     {
+        float duration = 0f;
         
         // 실행 제어 관점에서의 코루틴
         // - 특정 프레임, 시간 단위로 실행을 제어하거나
