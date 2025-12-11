@@ -35,12 +35,17 @@ public class Monster : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private CharacterController _controller;
 
-    public float DetectDistance = 3f;
-    public float MoveSpeed = 5f;
+    public float DetectDistance = 4f;
+    public float AttackDistance = 1.2f;
+    
+    public float MoveSpeed   = 5f;
+    public float AttackSpeed = 2f;
+    public float AttackTimer = 0f;
+    
 
     private void Update()
     {
-        // 몬스터의 상태에따라 다른 행동을한다. (다른 메서드를 호출한다.)
+        // 몬스터의 상태에 따라 다른 행동을한다. (다른 메서드를 호출한다.)
         switch (State)
         {
             case EMonsterState.Idle:
@@ -76,6 +81,7 @@ public class Monster : MonoBehaviour
         // 대기하는 상태
         // Todo. Idle 애니메이션 실행
             
+        // 플레이어가 탐지범위 안에 있다면...
         if(Vector3.Distance(transform.position, _player.transform.position) <= DetectDistance)
         {
             State = EMonsterState.Trace;
@@ -88,21 +94,48 @@ public class Monster : MonoBehaviour
         // 플레이어를 쫓아가는 상태
         // Todo. Run 애니메이션 실행
         
-        // 1. 방향을 구한다.
+        // Comback 과제
+        
+        float distance = Vector3.Distance(transform.position, _player.transform.position);
+        
+        // 1. 플레이어를 향하는 방향을 구한다.
         Vector3 direction = (_player.transform.position - transform.position).normalized;
         // 2. 방향에 따라 이동한다.
         _controller.Move(direction * MoveSpeed * Time.deltaTime);
 
+        // 플레이어와의 거리가 공격범위내라면
+        if (distance <= AttackDistance)
+        {
+            State = EMonsterState.Attack;
+        }
     }
 
     private void Comeback()
     {
-        
+        // 과제 1. 제자리로 복귀하는 상태
     }
 
     private void Attack()
     {
+        // 플레이어를 공격하는 상태
         
+        // 플레이어와의 거리가 멀다면 다시 쫒아오는 상태로 전환
+        float distance = Vector3.Distance(transform.position, _player.transform.position);
+        if (distance > AttackDistance)
+        {
+            State = EMonsterState.Trace;
+            return;
+        }
+
+        AttackTimer += Time.deltaTime;
+        if (AttackTimer >= AttackSpeed)
+        {
+            AttackTimer = 0f;
+            Debug.Log("플레이어 공격!");
+            
+            // 과제 2번. 플레이어 공격하기
+        }
+
     }
 
     private void Hit()
