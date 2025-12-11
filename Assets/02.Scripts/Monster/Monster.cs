@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -63,14 +65,6 @@ public class Monster : MonoBehaviour
             case EMonsterState.Attack:
                 Attack();
                 break;
-            
-            case EMonsterState.Hit:
-                Hit();
-                break;
-            
-            case EMonsterState.Death:
-                Death();
-                break;
         }
     }
     
@@ -107,6 +101,7 @@ public class Monster : MonoBehaviour
         if (distance <= AttackDistance)
         {
             State = EMonsterState.Attack;
+            Debug.Log("상태 전환: Trace -> Attack");
         }
     }
 
@@ -124,6 +119,7 @@ public class Monster : MonoBehaviour
         if (distance > AttackDistance)
         {
             State = EMonsterState.Trace;
+            Debug.Log("상태 전환: Attack -> Trace");
             return;
         }
 
@@ -135,17 +131,51 @@ public class Monster : MonoBehaviour
             
             // 과제 2번. 플레이어 공격하기
         }
-
     }
 
-    private void Hit()
+
+    public float Health = 100;
+    public bool TryTakeDamage(float damage)
     {
+        if (State == EMonsterState.Hit || State == EMonsterState.Death)
+        {
+            return false;
+        }
         
+        Health -= damage;
+
+        if (Health > 0)
+        {
+            // 히트상태
+            Debug.Log($"상태 전환: {State} -> Hit");
+            State = EMonsterState.Hit;
+
+            StartCoroutine(Hit_Coroutine());
+        }
+        else
+        {
+            // 데스상태
+            Debug.Log($"상태 전환: {State} -> Death");
+            State = EMonsterState.Death;
+            StartCoroutine(Death_Coroutine());
+        }
+
+        return true;
+    }
+    
+    private IEnumerator Hit_Coroutine()
+    {
+        // Todo. Hit 애니메이션 실행
+        
+        yield return new WaitForSeconds(0.2f);
+        State = EMonsterState.Idle;
     }
 
-    private void Death()
+    private IEnumerator Death_Coroutine()
     {
-        
+        // Todo. Death 애니메이션 실행
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
     
 }

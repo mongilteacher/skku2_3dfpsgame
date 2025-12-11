@@ -10,7 +10,7 @@ public class PlayerGunFire : MonoBehaviour
     private void Update()
     {
         // 1. 마우슨 왼쪽 버튼이 눌린다면..
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(0))
         {
             // 2. Ray를 생성하고 발사할 위치, 방향, 거리를 설정한다. (쏜다.)
             Ray ray = new Ray(_fireTransform.position, Camera.main.transform.forward);
@@ -34,6 +34,13 @@ public class PlayerGunFire : MonoBehaviour
                 _hitEffect.transform.forward = hitInfo.normal;
 
                 _hitEffect.Play();
+
+
+                Monster monster = hitInfo.collider.gameObject.GetComponent<Monster>();
+                if (monster != null)
+                {
+                    monster.TryTakeDamage(10);
+                }
             }
         }
         
