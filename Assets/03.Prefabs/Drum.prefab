@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 416856076301437491}
   - component: {fileID: 958684479023538060}
   - component: {fileID: 5906080909832899205}
+  - component: {fileID: 6148214641242890136}
   m_Layer: 0
   m_Name: Drum
   m_TagString: Untagged
@@ -138,3 +139,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6148214641242890136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524843987109003006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd878c34d0d94a43b8a4418780f01c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health:
+    _maxValue: 100
+    _value: 0
+    _regenValue: 0
+  _damage:
+    _value: 100
+  _explosionParticePrefab: {fileID: 1620140131458703901, guid: 57e5b83dfee152a47aedf7d83c83e9f5, type: 3}
