@@ -135,6 +135,10 @@ public class Monster : MonoBehaviour
 
 
     public float Health = 100;
+
+
+ 
+    
     public bool TryTakeDamage(float damage)
     {
         if (State == EMonsterState.Hit || State == EMonsterState.Death)
