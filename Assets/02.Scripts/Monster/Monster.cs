@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -36,6 +37,8 @@ public class Monster : MonoBehaviour
 
     [SerializeField] private GameObject _player;
     [SerializeField] private CharacterController _controller;
+
+    public ConsumableStat Health;
 
     public float DetectDistance = 4f;
     public float AttackDistance = 1.2f;
@@ -134,7 +137,6 @@ public class Monster : MonoBehaviour
     }
 
 
-    public float Health = 100;
 
 
  
@@ -146,9 +148,9 @@ public class Monster : MonoBehaviour
             return false;
         }
         
-        Health -= damage;
+        Health.Consume(damage);
 
-        if (Health > 0)
+        if (Health.Value > 0)
         {
             // 히트상태
             Debug.Log($"상태 전환: {State} -> Hit");
