@@ -5,11 +5,19 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager _instance;
+    public static GameManager Instance => _instance;
+    
     private EGameState _state = EGameState.Ready;
     public EGameState State => _state;
 
     [SerializeField] private TextMeshProUGUI _stateTextUI;
 
+    private void Awake()
+    {
+        _instance = this;
+    }
+    
     private void Start()
     {
         _stateTextUI.gameObject.SetActive(true);
