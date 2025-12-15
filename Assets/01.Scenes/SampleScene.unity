@@ -1118,6 +1118,7 @@ GameObject:
   - component: {fileID: 950359102}
   - component: {fileID: 950359103}
   - component: {fileID: 950359104}
+  - component: {fileID: 950359105}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -1305,6 +1306,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireTransform: {fileID: 1305634187}
   _hitEffect: {fileID: 1795158369}
+--- !u!114 &950359105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950359094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357fc5a916cdf22478a67c93ccd3b966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1000202134
 GameObject:
   m_ObjectHideFlags: 0

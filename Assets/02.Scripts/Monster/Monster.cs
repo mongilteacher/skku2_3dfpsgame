@@ -39,6 +39,7 @@ public class Monster : MonoBehaviour
     [SerializeField] private CharacterController _controller;
 
     public ConsumableStat Health;
+    public ValueStat Damage;
 
     public float DetectDistance = 4f;
     public float AttackDistance = 1.2f;
@@ -133,6 +134,8 @@ public class Monster : MonoBehaviour
             Debug.Log("플레이어 공격!");
             
             // 과제 2번. 플레이어 공격하기
+            Player player = _player.GetComponent<Player>();
+            player.TryTakeDamage(Damage.Value);
         }
     }
 

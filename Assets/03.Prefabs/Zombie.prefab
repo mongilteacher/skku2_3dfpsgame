@@ -311,6 +311,8 @@ MonoBehaviour:
     _maxValue: 100
     _value: 100
     _regenValue: 10
+  Damage:
+    _value: 15
   DetectDistance: 3
   AttackDistance: 1.2
   MoveSpeed: 5
