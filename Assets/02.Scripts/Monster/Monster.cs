@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
@@ -120,10 +121,10 @@ public class Monster : MonoBehaviour
         
         // 플레이어와의 거리가 공격범위내라면
         if (distance <= AttackDistance)
-        {
-            //State = EMonsterState.Attack;
-           // Debug.Log("상태 전환: Trace -> Attack");
-            //return;
+        { 
+            State = EMonsterState.Attack; 
+            Debug.Log("상태 전환: Trace -> Attack");
+            return;
         }
 
         if (_agent.isOnOffMeshLink)
@@ -151,12 +152,38 @@ public class Monster : MonoBehaviour
         _agent.ResetPath();
         _agent.CompleteOffMeshLink();
 
-        transform.position = _jumpEndPosition + new Vector3(0f, 0.5f);
-        State = EMonsterState.Trace;
-        
+        StartCoroutine(Jump_Coroutine());
+
+
         // 1. 점프 거리와 내 이동속를 계산해서 점프 시간을 구한다.
         // 2. 점프 시간동안 포물선으로 이동한다.
         // 3. 이동 후 다시 Trace
+    }
+
+    private IEnumerator Jump_Coroutine()
+    {
+        
+        float distance = Vector3.Distance(transform.position, _jumpEndPosition);
+        float jumpTime = distance / MoveSpeed;
+        float jumpHeight = Mathf.Max(1f, distance * 0.3f);
+        
+        float elapsedTime = 0f;
+
+        while (elapsedTime < jumpTime)
+        {
+            float t = elapsedTime / jumpTime;
+            
+            Vector3 newPosition = Vector3.Lerp(_jumpStartPosition, _jumpEndPosition, t);
+            newPosition.y += Math.Sign(t * Mathf.PI) * jumpHeight;
+            transform.position = newPosition;
+
+            elapsedTime += Time.deltaTime;
+            
+            yield return null;
+        }
+
+        transform.position = _jumpEndPosition;
+        State = EMonsterState.Trace;
     }
     
 
