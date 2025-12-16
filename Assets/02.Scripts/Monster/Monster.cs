@@ -2,6 +2,7 @@ using System.Collections;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class Monster : MonoBehaviour
 
     [SerializeField] private GameObject _player;
     [SerializeField] private CharacterController _controller;
+    [SerializeField] private NavMeshAgent _agent;
 
     public ConsumableStat Health;
     public ValueStat Damage;
@@ -47,8 +49,18 @@ public class Monster : MonoBehaviour
     public float MoveSpeed   = 5f;
     public float AttackSpeed = 2f;
     public float AttackTimer = 0f;
-    
 
+
+    private Vector3 _jumpStartPosition;
+    private Vector3 _jumpEndPosition;
+
+
+    private void Start()
+    {
+        _agent.speed            = MoveSpeed;
+        _agent.stoppingDistance = AttackDistance;
+    }
+    
     private void Update()
     {
         if (GameManager.Instance.State != EGameState.Playing)
@@ -66,6 +78,10 @@ public class Monster : MonoBehaviour
             
             case EMonsterState.Trace:
                 Trace();
+                break;
+            
+            case EMonsterState.Jump:
+                Jump();
                 break;
             
             case EMonsterState.Comeback:
@@ -98,22 +114,51 @@ public class Monster : MonoBehaviour
         // 플레이어를 쫓아가는 상태
         // Todo. Run 애니메이션 실행
         
-        // Comback 과제
-        
         float distance = Vector3.Distance(transform.position, _player.transform.position);
+        _agent.SetDestination(_player.transform.position);
+     
         
-        // 1. 플레이어를 향하는 방향을 구한다.
-        Vector3 direction = (_player.transform.position - transform.position).normalized;
-        // 2. 방향에 따라 이동한다.
-        _controller.Move(direction * MoveSpeed * Time.deltaTime);
-
         // 플레이어와의 거리가 공격범위내라면
         if (distance <= AttackDistance)
         {
-            State = EMonsterState.Attack;
-            Debug.Log("상태 전환: Trace -> Attack");
+            //State = EMonsterState.Attack;
+           // Debug.Log("상태 전환: Trace -> Attack");
+            //return;
         }
+
+        if (_agent.isOnOffMeshLink)
+        {
+            Debug.Log("링크를 만남");
+            OffMeshLinkData linkData = _agent.currentOffMeshLinkData;
+            _jumpStartPosition = linkData.startPos;
+            _jumpEndPosition   = linkData.endPos;
+
+            if (_jumpEndPosition.y > _jumpStartPosition.y)
+            {
+                Debug.Log("상태 전환: Trace -> Jump");
+                State = EMonsterState.Jump;
+                return;
+            }
+        }
+        
     }
+
+    
+    private void Jump()
+    {
+        // 순간이동
+        _agent.isStopped = true;
+        _agent.ResetPath();
+        _agent.CompleteOffMeshLink();
+
+        transform.position = _jumpEndPosition + new Vector3(0f, 0.5f);
+        State = EMonsterState.Trace;
+        
+        // 1. 점프 거리와 내 이동속를 계산해서 점프 시간을 구한다.
+        // 2. 점프 시간동안 포물선으로 이동한다.
+        // 3. 이동 후 다시 Trace
+    }
+    
 
     private void Comeback()
     {
@@ -159,6 +204,11 @@ public class Monster : MonoBehaviour
         
         Health.Consume(damage);
 
+        
+        _agent.isStopped = true;  // 이동 일시정지
+        _agent.ResetPath();       // 경로(=목적지) 삭제 
+        
+        
         if (Health.Value > 0)
         {
             // 히트상태

@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 6836895189635117821}
   - component: {fileID: 8945663639913446880}
   - component: {fileID: 6053896735784545769}
+  - component: {fileID: 5383952201263637957}
   m_Layer: 8
   m_Name: Zombie
   m_TagString: Untagged
@@ -383,14 +384,15 @@ MonoBehaviour:
   State: 0
   _player: {fileID: 0}
   _controller: {fileID: 6836895189635117821}
+  _agent: {fileID: 5383952201263637957}
   Health:
     _maxValue: 100
     _value: 100
     _regenValue: 10
   Damage:
     _value: 15
-  DetectDistance: 3
-  AttackDistance: 1.2
+  DetectDistance: 5
+  AttackDistance: 2.5
   MoveSpeed: 5
   AttackSpeed: 2
   AttackTimer: 0
@@ -408,6 +410,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBarTransform: {fileID: 6041559161025303507}
   _guageImage: {fileID: 5371083909352673470}
+--- !u!195 &5383952201263637957
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4624935381376357738}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5360562138230331626
 GameObject:
   m_ObjectHideFlags: 0
