@@ -19,13 +19,15 @@ public class PlayerMove : MonoBehaviour
     
     private CharacterController _controller;
     private PlayerStats _stats;
-    
+    private Animator _animator;
+
     private float _yVelocity = 0f;   // 중력에 의해 누적될 y값 변수
     
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
         _stats = GetComponent<PlayerStats>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -34,7 +36,7 @@ public class PlayerMove : MonoBehaviour
         _yVelocity += _config.Gravity * Time.deltaTime;
         
         // 1. 키보드 입력 받기
-        float x = Input.GetAxis("Horizontal");
+        float x = Input.GetAxis("Horizontal"); // -1 ~ 1
         float y = Input.GetAxis("Vertical");
         
         // 2. 입력에 따른 방향 구하기 
@@ -43,9 +45,10 @@ public class PlayerMove : MonoBehaviour
         
         // - 글로벌 좌표 방향을 구한다. 
         Vector3 direction = new Vector3(x, 0, y);
+        _animator.SetFloat("Speed", direction.magnitude);
+
         direction.Normalize();
 
-        
         
         // - 점프! : 점프 키를 누르고 && 땅이라면
         if (Input.GetButtonDown("Jump") && _controller.isGrounded)
