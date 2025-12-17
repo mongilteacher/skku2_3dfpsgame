@@ -273,9 +273,12 @@ public class Monster : MonoBehaviour
     
     private IEnumerator Hit_Coroutine()
     {
-        // Todo. Hit 애니메이션 실행
         
-        yield return new WaitForSeconds(0.2f);
+        
+        // Todo. Hit 애니메이션 실행
+        _animator.SetTrigger("Hit");
+        
+        yield return new WaitForSeconds(1f);
         State = EMonsterState.Idle;
     }
 
