@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -40,6 +41,7 @@ public class Monster : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private CharacterController _controller;
     [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private Animator _animator;
 
     public ConsumableStat Health;
     public ValueStat Damage;
@@ -55,6 +57,16 @@ public class Monster : MonoBehaviour
     private Vector3 _jumpStartPosition;
     private Vector3 _jumpEndPosition;
 
+
+    private void Awake()
+    {
+        if (_animator == null)
+        {
+            _animator = GetComponentInChildren<Animator>();
+        }
+    }
+    
+    
 
     private void Start()
     {
@@ -106,6 +118,7 @@ public class Monster : MonoBehaviour
         if(Vector3.Distance(transform.position, _player.transform.position) <= DetectDistance)
         {
             State = EMonsterState.Trace;
+            _animator.SetTrigger("IdleToTrace");
             Debug.Log("상태 전환: Idle -> Trace");
         }
     }
@@ -121,8 +134,12 @@ public class Monster : MonoBehaviour
         
         // 플레이어와의 거리가 공격범위내라면
         if (distance <= AttackDistance)
-        { 
+        {
+            _agent.isStopped = true;
+            _agent.ResetPath();
+            
             State = EMonsterState.Attack; 
+            _animator.SetTrigger("TraceToAttackIdle");
             Debug.Log("상태 전환: Trace -> Attack");
             return;
         }
@@ -201,6 +218,7 @@ public class Monster : MonoBehaviour
         if (distance > AttackDistance)
         {
             State = EMonsterState.Trace;
+            _animator.SetTrigger("AttackIdleToTrace");
             Debug.Log("상태 전환: Attack -> Trace");
             return;
         }
@@ -208,12 +226,10 @@ public class Monster : MonoBehaviour
         AttackTimer += Time.deltaTime;
         if (AttackTimer >= AttackSpeed)
         {
+            _animator.SetTrigger("Attack");
+
             AttackTimer = 0f;
             Debug.Log("플레이어 공격!");
-            
-            // 과제 2번. 플레이어 공격하기
-            Player player = _player.GetComponent<Player>();
-            player.TryTakeDamage(Damage.Value);
         }
     }
 
