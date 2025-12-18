@@ -212,6 +212,8 @@ public class Monster : MonoBehaviour
     private void Attack()
     {
         // 플레이어를 공격하는 상태
+        _agent.isStopped = true;  // 이동 일시정지
+        _agent.ResetPath();       // 경로(=목적지) 삭제 
         
         // 플레이어와의 거리가 멀다면 다시 쫒아오는 상태로 전환
         float distance = Vector3.Distance(transform.position, _player.transform.position);
@@ -240,7 +242,7 @@ public class Monster : MonoBehaviour
     
     public bool TryTakeDamage(float damage)
     {
-        if (State == EMonsterState.Hit || State == EMonsterState.Death)
+        if (State == EMonsterState.Death)
         {
             return false;
         }
