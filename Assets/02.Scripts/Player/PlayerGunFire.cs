@@ -103,12 +103,13 @@ public class PlayerGunFire : MonoBehaviour
             {
                 Value = hitInfo.distance,
                 HitPoint = hitInfo.point,
+                Normal =  hitInfo.normal,
                 Who = gameObject,
                 Critical = false,
             };
             
             // 단점
-            // - 같은 기능인데 중복된 코드가 많다.
+            // - [0] 같은 기능인데 중복된 코드가 많다. (다형성)
             // - [O] 같은 기능인데 기능의 이름과 매개변수가 다르다.
             
             // 인터페이스를 사용하면 된다. -> 약속을 강제한다.
