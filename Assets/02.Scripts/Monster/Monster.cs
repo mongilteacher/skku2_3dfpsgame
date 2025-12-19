@@ -245,8 +245,8 @@ public class Monster : MonoBehaviour, IDamageable
     {
         // 대미지를 받으면 "대미지를 받은 위치"에 혈흔 이펙트를 생성해서 플레이 하고 싶다.
         // 그런데 그 이펙트는 "몬스터를 따라다녀야" 한다.
-        GameObject bloodEffect = Instantiate(bloodEffectPrefab, _player.transform.position, Quaternion.identity,  transform );
-        bloodEffect.transform.forward = damage.Normal;
+        // GameObject bloodEffect = Instantiate(bloodEffectPrefab, _player.transform.position, Quaternion.identity,  transform );
+        // bloodEffect.transform.forward = damage.Normal;
         
         
         if (State == EMonsterState.Death)

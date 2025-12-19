@@ -30,6 +30,9 @@ public class Bomb : MonoBehaviour
             }
         }*/
         
+       
+
+
         // 가상의 구를 만들어서 그 구 영역에 안에있는 모든 콜라이더를 찾아서 배열로 반환한다..
         Collider[] colliders = Physics.OverlapSphere(transform.position, ExplosionRadius, LayerMask.NameToLayer("Monster"));
         for (int i = 0; i < colliders.Length; i++)
@@ -41,7 +44,15 @@ public class Bomb : MonoBehaviour
             
             float finalDamage = Damage / distance; // 폭발 원점과 거리에 따라서 대미지를 다르게 준다.
             
-            monster.TryTakeDamage(finalDamage);
+            Damage damage = new Damage()
+            {
+                Value = finalDamage,
+                HitPoint = transform.position,
+                Who = this.gameObject,
+                Critical = false,
+            };
+            
+            monster.TryTakeDamage(damage);
         }
         
         
