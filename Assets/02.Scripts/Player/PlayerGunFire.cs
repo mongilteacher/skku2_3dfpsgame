@@ -109,25 +109,17 @@ public class PlayerGunFire : MonoBehaviour
             
             // 단점
             // - 같은 기능인데 중복된 코드가 많다.
-            // - 같은 기능인데 기능의 이름과 매개변수가 다르다.
+            // - [O] 같은 기능인데 기능의 이름과 매개변수가 다르다.
             
             // 인터페이스를 사용하면 된다. -> 약속을 강제한다.
             // 인터페이스를 설계 한다는 것은 중급 개발의 시작
             
             // 플레이어 - 약속 - IDamageable - (몬스터, 드럼통, 나무, 장애물)
             
-            // 2. 몬스터: 용진씨 개발
-            Monster monster = hitInfo.collider.gameObject.GetComponent<Monster>();
-            if (monster != null)
+            IDamageable damageable = hitInfo.collider.GetComponent<IDamageable>();
+            if (damageable != null) // 몬스터 or 드럼통 or 새 or 나무 판자 ..
             {
-                monster.TryTakeDamage(damage);
-            }
-            
-            // 3. 드럼통: 민균씨가 개발
-            Drum drum = hitInfo.collider.gameObject.GetComponent<Drum>();
-            if (drum != null)
-            {
-                drum.TryTakeDamage(damage);
+                damageable.TryTakeDamage(damage);
             }
         }
     }
