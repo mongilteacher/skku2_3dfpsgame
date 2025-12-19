@@ -98,11 +98,16 @@ public class PlayerGunFire : MonoBehaviour
 
             _hitEffect.Play();
 
-
+            Damage damage = new Damage()
+            {
+                Value = hitInfo.distance,
+                HitPoint = hitInfo.point,
+            };
+            
             Monster monster = hitInfo.collider.gameObject.GetComponent<Monster>();
             if (monster != null)
             {
-                monster.TryTakeDamage(10);
+                monster.TryTakeDamage(damage);
             }
                 
             Drum drum = hitInfo.collider.gameObject.GetComponent<Drum>();
