@@ -9,7 +9,8 @@ public class PlayerGunFire : MonoBehaviour
     [SerializeField] private Transform _fireTransform;
     [SerializeField] private ParticleSystem _hitEffect;
     [SerializeField] private List<GameObject> _muzzleEffects;
-
+    [SerializeField] private Animator _animator;
+    
 
     private const float ATTACK_SPEED = 0.2f;
     private float _attackTimer = 0.2f;
@@ -23,9 +24,15 @@ public class PlayerGunFire : MonoBehaviour
         {
             _attackTimer = ATTACK_SPEED;
             
+            _animator.SetBool("Fire", true);
+            
             Shoot();
             
             StartCoroutine(MuzzleEffect_Coroutine());
+        }
+        else
+        {
+            _animator.SetBool("Fire", false);
         }
 
     }
