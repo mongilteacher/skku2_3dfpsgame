@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
         _stats.Health.Consume(damage);
         
         // 플레이어만 레이어 가중치
-        _animator.SetLayerWeight(2, _stats.Health.Value / _stats.Health.MaxValue);
+        //_animator.SetLayerWeight(2, _stats.Health.Value / _stats.Health.MaxValue);
 
         return true;
     }

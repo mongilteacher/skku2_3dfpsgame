@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // 플레이어의 '스탯'을 관리하는 컴포넌트
@@ -14,11 +15,20 @@ public class PlayerStats : MonoBehaviour
     public ValueStat RunSpeed;
     public ValueStat JumpPower;
 
-
+    // 나를 구독하는 구독자 명단(콜백함수 들)
+    public static event Action OnDataChanged;
+    
     private void Start()
     {
-        Health.Initialize();
-        Stamina.Initialize();
+        Debug.Log("PlayerStats initialized");
+
+        // 스타트 호출 시점에서의 OnDataChanged에 구독자가 있을까?
+        // 비어있다.
+        // 고민해야될것 Action은 참조형인가? 값형이가?
+        // Action은 += 를 쓸때마다 새로운 것이다.
+        
+        // Health.Initialize(OnDataChanged);
+        // Stamina.Initialize(OnDataChanged);
     }
 
     private void Update()
