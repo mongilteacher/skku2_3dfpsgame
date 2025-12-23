@@ -23,6 +23,10 @@ public class ClickManager : MonoBehaviour
     // 너무 세분화 할수록 읽어야할 코드와 상황이 많아져서 머리가 힘들다.
     // public event Action OnLeftClickCountChanged;
     // public event Action OnRightClickCountChanged;
+    // if - else if
+    // switch-case 
+    // 전략 패턴
+    
     
     // 레이어드 아키텍처란 시스템을 (데이터, 매니저, UI) 계층으로 나누고  의존성을 한방향으로 강제함으로써
     // 좀 더 독립적인 구조를 지키는것.. 이를 위해서 옵저버 패턴을 쓴다.
