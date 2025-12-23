@@ -76,19 +76,19 @@ public class LoginScene : MonoBehaviour
         // 3-1. 아이디가 있는지 확인한다.
         if (!PlayerPrefs.HasKey(id))
         {
-            _messageTextUI.text = "아이디를 확인해주세요.";
+            _messageTextUI.text = "아이디/비밀번호를 확인해주세요.";
             return;
         }
         
         string myPassword = PlayerPrefs.GetString(id);
         if (myPassword != password)
         {
-            _messageTextUI.text = "비밀번호를 확인해주세요.";
+            _messageTextUI.text = "아이디/비밀번호를 확인해주세요.";
             return;
         }
         
         // 4. 있다면 씬 이동
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("LoadingScene");
     }
 
     private void Register()
